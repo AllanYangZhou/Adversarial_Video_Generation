@@ -46,7 +46,7 @@ def clip_l2_diff(clip):
     @return: The sum of l2 differences between the frame pixels of each sequential pair of frames.
     """
     diff = 0
-    for i in xrange(c.HIST_LEN):
+    for i in range(c.HIST_LEN):
         frame = clip[:, :, 3 * i:3 * (i + 1)]
         next_frame = clip[:, :, 3 * (i + 1):3 * (i + 2)]
         # noinspection PyTypeChecker
@@ -103,7 +103,7 @@ def process_clip():
     # repeat until we have a clip with movement in it.
     take_first = np.random.choice(2, p=[0.95, 0.05])
     cropped_clip = np.empty([c.TRAIN_HEIGHT, c.TRAIN_WIDTH, 3 * (c.HIST_LEN + 1)])
-    for i in xrange(100):  # cap at 100 trials in case the clip has no movement anywhere
+    for i in range(100):  # cap at 100 trials in case the clip has no movement anywhere
         crop_x = np.random.choice(c.FULL_WIDTH - c.TRAIN_WIDTH + 1)
         crop_y = np.random.choice(c.FULL_HEIGHT - c.TRAIN_HEIGHT + 1)
         cropped_clip = clip[crop_y:crop_y + c.TRAIN_HEIGHT, crop_x:crop_x + c.TRAIN_WIDTH, :]
@@ -122,7 +122,7 @@ def get_train_batch():
     """
     clips = np.empty([c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))],
                      dtype=np.float32)
-    for i in xrange(c.BATCH_SIZE):
+    for i in range(c.BATCH_SIZE):
         path = c.TRAIN_DIR_CLIPS + str(np.random.choice(c.NUM_CLIPS)) + '.npz'
         clip = np.load(path)['arr_0']
 

@@ -57,7 +57,7 @@ def lp_loss(gen_frames, gt_frames, l_num):
     """
     # calculate the loss for each scale
     scale_losses = []
-    for i in xrange(len(gen_frames)):
+    for i in range(len(gen_frames)):
         scale_losses.append(tf.reduce_sum(tf.abs(gen_frames[i] - gt_frames[i])**l_num))
 
     # condense into one tensor and avg
@@ -76,7 +76,7 @@ def gdl_loss(gen_frames, gt_frames, alpha):
     """
     # calculate the loss for each scale
     scale_losses = []
-    for i in xrange(len(gen_frames)):
+    for i in range(len(gen_frames)):
         # create filters [-1, 1] and [[1],[-1]] for diffing to the left and down respectively.
         pos = tf.constant(np.identity(3), dtype=tf.float32)
         neg = -1 * pos
@@ -110,7 +110,7 @@ def adv_loss(preds, labels):
     """
     # calculate the loss for each scale
     scale_losses = []
-    for i in xrange(len(preds)):
+    for i in range(len(preds)):
         loss = bce_loss(preds[i], labels)
         scale_losses.append(loss)
 
