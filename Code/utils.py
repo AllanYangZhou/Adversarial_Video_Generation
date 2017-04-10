@@ -67,6 +67,8 @@ def get_full_clips(data_dir, num_clips, num_rec_out=1):
              [num_clips, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + num_rec_out))].
              A batch of frame sequences with values normalized in range [-1, 1].
     """
+    print('c.HIST_LEN', c.HIST_LEN)
+    print('num_rec_out', num_rec_out)
     clips = np.empty([num_clips,
                       c.FULL_HEIGHT,
                       c.FULL_WIDTH,
@@ -78,6 +80,9 @@ def get_full_clips(data_dir, num_clips, num_rec_out=1):
     # get a random clip of length HIST_LEN + num_rec_out from each episode
     for clip_num, ep_dir in enumerate(ep_dirs):
         ep_frame_paths = sorted(glob(os.path.join(ep_dir, '*')))
+        # print('c.HIST_LEN', c.HIST_LEN)
+        # print('num_rec_out', num_rec_out)
+        # print('lenght ep_dir', len(ep_frame_paths))
         start_index = np.random.choice(len(ep_frame_paths) - (c.HIST_LEN + num_rec_out - 1))
         clip_frame_paths = ep_frame_paths[start_index:start_index + (c.HIST_LEN + num_rec_out)]
 
