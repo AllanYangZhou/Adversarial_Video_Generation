@@ -113,6 +113,7 @@ def process_clip():
 
     return cropped_clip
 
+all_clips = np.load(c.TRAIN_DIR_CLIPS)
 def get_train_batch():
     """
     Loads c.BATCH_SIZE clips from the database of preprocessed training clips.
@@ -120,6 +121,7 @@ def get_train_batch():
     @return: An array of shape
             [c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))].
     """
+    '''
     clips = np.empty([c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))],
                      dtype=np.float32)
     for i in range(c.BATCH_SIZE):
@@ -129,7 +131,20 @@ def get_train_batch():
         clips[i] = clip
 
     return clips
-
+    '''
+    clips = np.empty([c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))],
+                     dtype=np.float32)
+    for i in range(c.BATCH_SIZE):
+        vid_num = np.random.choice(700)
+        clip = all_clips[vid_num]
+        concated = []
+        start_point = np.random.choice(12)
+        for i in range(c.HIST_LEN + 1):
+            concated.append(clip[i + start_point])
+        clip = np.concatenate(concated, axis=2)
+        print(clip.shape)
+        clips[i] = clip
+    return clips
 
 def get_test_batch(test_batch_size, num_rec_out=1):
     """
