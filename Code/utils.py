@@ -104,16 +104,17 @@ def process_clip():
     take_first = np.random.choice(2, p=[0.95, 0.05])
     cropped_clip = np.empty([c.TRAIN_HEIGHT, c.TRAIN_WIDTH, 3 * (c.HIST_LEN + 1)])
     for i in range(100):  # cap at 100 trials in case the clip has no movement anywhere
-        crop_x = np.random.choice(c.FULL_WIDTH - c.TRAIN_WIDTH + 1)
-        crop_y = np.random.choice(c.FULL_HEIGHT - c.TRAIN_HEIGHT + 1)
-        cropped_clip = clip[crop_y:crop_y + c.TRAIN_HEIGHT, crop_x:crop_x + c.TRAIN_WIDTH, :]
+        #crop_x = np.random.choice(c.FULL_WIDTH - c.TRAIN_WIDTH + 1)
+        #crop_y = np.random.choice(c.FULL_HEIGHT - c.TRAIN_HEIGHT + 1)
+        #cropped_clip = clip[crop_y:crop_y + c.TRAIN_HEIGHT, crop_x:crop_x + c.TRAIN_WIDTH, :]
+        cropped_clip = clip
 
         if take_first or clip_l2_diff(cropped_clip) > c.MOVEMENT_THRESHOLD:
             break
 
     return cropped_clip
 
-all_clips = np.load(c.TRAIN_DIR_CLIPS)
+#all_clips = np.load('../Data/1000vids2.npy')
 def get_train_batch():
     """
     Loads c.BATCH_SIZE clips from the database of preprocessed training clips.
@@ -121,7 +122,6 @@ def get_train_batch():
     @return: An array of shape
             [c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))].
     """
-    '''
     clips = np.empty([c.BATCH_SIZE, c.TRAIN_HEIGHT, c.TRAIN_WIDTH, (3 * (c.HIST_LEN + 1))],
                      dtype=np.float32)
     for i in range(c.BATCH_SIZE):
@@ -145,6 +145,7 @@ def get_train_batch():
         print(clip.shape)
         clips[i] = clip
     return clips
+    '''
 
 def get_test_batch(test_batch_size, num_rec_out=1):
     """
