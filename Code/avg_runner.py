@@ -2,12 +2,26 @@ import tensorflow as tf
 import getopt
 import sys
 import os
+import numpy as np
 
-from utils import get_train_batch, get_test_batch
+#from utils import get_train_batch, get_test_batch
 import constants as c
 from g_model import GeneratorModel
 from d_model import DiscriminatorModel
 
+all_clips = np.load('../Data/1000vids_stacked.npy')
+all_clips = (all_clips / (255. / 2)) - 1.
+def get_train_batch():
+    indices = np.random.choice(700, size=(8,))
+    frame = np.random.choice(8)
+    batch = all_clips[indices][:,:,:,frame*3:(frame+5)*3]
+    return batch
+
+def get_test_batch(batch_size, num_rec_out=0):
+    indices = np.random.choice(700, size=(8,))
+    frame = np.random.choice(8)
+    batch = all_clips[indices][:,:,:,frame*3:(frame+8)*3]
+    return batch
 
 class AVGRunner:
     def __init__(self, num_steps, model_load_path, num_test_rec):

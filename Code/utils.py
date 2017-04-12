@@ -85,7 +85,8 @@ def get_full_clips(data_dir, num_clips, num_rec_out=1):
         # print('lenght ep_dir', len(ep_frame_paths))
         start_index = np.random.choice(len(ep_frame_paths) - (c.HIST_LEN + num_rec_out - 1))
         clip_frame_paths = ep_frame_paths[start_index:start_index + (c.HIST_LEN + num_rec_out)]
-
+        print(start_index)
+        print(c.HIST_LEN+num_rec_out)
         # read in frames
         for frame_num, frame_path in enumerate(clip_frame_paths):
             frame = imread(frame_path, mode='RGB')
@@ -120,7 +121,7 @@ def process_clip():
     return cropped_clip
 
 #all_clips = np.load('../Data/1000vids2.npy')
-def get_train_batch():
+def batch():
     """
     Loads c.BATCH_SIZE clips from the database of preprocessed training clips.
 
